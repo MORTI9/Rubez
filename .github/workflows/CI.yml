@@ -21,13 +21,18 @@ jobs:
 
       - name: Build GoogleTest
         run: |
-          cd /usr/src/gtest
+          if [ -d "/usr/src/googletest" ]; then
+            cd /usr/src/googletest
+          else
+            cd /usr/src/gtest
+          fi
           sudo cmake .
           sudo make
           sudo cp lib/*.a /usr/lib/
 
       - name: Configure and build project
         run: |
+          rm -rf build
           mkdir -p build && cd build
           cmake .. -DBUILD_TESTS=ON
           cmake --build . --config Release
