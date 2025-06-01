@@ -70,3 +70,4 @@ if(BUILD_TESTS)
 
     add_test(NAME AllTests COMMAND runTests)
 endif()
+include(CPack)
