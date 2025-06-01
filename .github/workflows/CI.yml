@@ -3,7 +3,7 @@ name: Build and Release .deb package
 on:
   push:
     tags:
-      - 'v*'  # Например, git tag v1.0.0
+      - 'v*'
 
 jobs:
   build-deb:
@@ -17,14 +17,7 @@ jobs:
       - name: Setup dependencies
         run: |
           sudo apt update
-          sudo apt install -y g++ cmake libgtest-dev build-essential
-
-      - name: Build GoogleTest
-        run: |
-          cd /usr/src/gtest
-          sudo cmake .
-          sudo make
-          sudo cp *.a /usr/lib/
+          sudo apt install -y g++ cmake libgtest-dev build-essential dpkg-dev debhelper devscripts fakeroot
 
       - name: Create build directory
         run: |
@@ -45,7 +38,7 @@ jobs:
       - name: Upload .deb as artifact
         uses: actions/upload-artifact@v3
         with:
-          name: StatePattern.deb
+          name: StatePatternApp.deb
           path: build/*.deb
 
   release:
@@ -57,7 +50,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
-          name: StatePattern.deb
+          name: StatePatternApp.deb
           path: .
 
       - name: Move .deb to root

@@ -31,13 +31,13 @@ add_library(StatePatternLib STATIC ${STATE_PATTERN_SRC} ${STATE_PATTERN_HDR})
 
 
 add_executable(StatePatternApp
-    examples/Program.cpp
     FiniteStateMachine_LightSwitch/LightSwitchMain.cpp
     examples/ConceptualExample01.cpp
     examples/ConceptualExample02.cpp
     examples/ConceptualExample03.cpp
     examples/JobApplication.cpp
     examples/DepartmentStore.cpp
+    examples/Program.cpp
 )
 
 target_link_libraries(StatePatternApp PRIVATE StatePatternLib)
@@ -48,7 +48,6 @@ option(BUILD_TESTS "Build tests" ON)
 if(BUILD_TESTS)
     enable_testing()
 
- 
     find_package(GTest REQUIRED)
 
     add_executable(runTests
@@ -56,18 +55,25 @@ if(BUILD_TESTS)
         tests/test_light_state.cpp
         tests/test_concrete_states.cpp
         tests/test_department_store.cpp
+        tests/test_job_application.cpp
         tests/test_conceptual_example_01.cpp
         tests/test_conceptual_example_02.cpp
         tests/test_conceptual_example_03.cpp
-        tests/test_job_application.cpp
     )
-
 
     target_link_libraries(runTests
         PRIVATE GTest::GTest GTest::Main StatePatternLib
     )
 
-
     add_test(NAME AllTests COMMAND runTests)
 endif()
+
+set(CPACK_GENERATOR "DEB")
+set(CPACK_DEBIAN_PACKAGE_NAME "statepatternapp")
+set(CPACK_DEBIAN_PACKAGE_VERSION "1.0.0")
+set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Your Name <your.email@example.com>")
+set(CPACK_DEBIAN_PACKAGE_DESCRIPTION "State Pattern Example Application")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "libstdc++6, libc6")
+set(CPACK_PACKAGE_DIRECTORY ${CMAKE_BINARY_DIR}/package)
+
 include(CPack)
