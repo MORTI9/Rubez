@@ -1,0 +1,65 @@
+name: CI/CD - Build and Release
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y build-essential cmake g++ libgtest-dev
+
+      - name: Build
+        run: |
+          mkdir -p build
+          cd build
+          cmake ..
+          cmake --build . --config Release
+
+      - name: Package .deb
+        run: |
+          mkdir -p package/usr/local/bin
+          cp build/StatePatternApp package/usr/local/bin/
+          chmod +x package/usr/local/bin/StatePatternApp
+
+          mkdir -p package/DEBIAN
+          cat <<EOF > package/DEBIAN/control
+          Package: statepatternapp
+          Version: 1.0
+          Section: base
+          Priority: optional
+          Architecture: amd64
+          Maintainer: Your Name <your.email@example.com>
+          Description: State Pattern Example Application
+          EOF
+
+          dpkg-deb --build package StatePatternApp.deb
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: StatePatternApp
+          path: StatePatternApp.deb
+
+  release:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: StatePatternApp
+          path: .
+
+      - uses: softprops/action-gh-release@v1
+        with:
+          files: StatePatternApp.deb
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
