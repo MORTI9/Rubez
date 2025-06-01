@@ -1,0 +1,6 @@
+/home/matvey/StatePattern/build/CMakeFiles/StatePatternLib.dir
+/home/matvey/StatePattern/build/CMakeFiles/StatePatternApp.dir
+/home/matvey/StatePattern/build/CMakeFiles/runTests.dir
+/home/matvey/StatePattern/build/CMakeFiles/test.dir
+/home/matvey/StatePattern/build/CMakeFiles/edit_cache.dir
+/home/matvey/StatePattern/build/CMakeFiles/rebuild_cache.dir

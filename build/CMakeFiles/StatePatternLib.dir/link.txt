@@ -1,0 +1,2 @@
+/usr/bin/ar qc libStatePatternLib.a CMakeFiles/StatePatternLib.dir/src/state_pattern/Light.cpp.o CMakeFiles/StatePatternLib.dir/src/state_pattern/LightState.cpp.o CMakeFiles/StatePatternLib.dir/src/state_pattern/ConcreteLightStates.cpp.o
+/usr/bin/ranlib libStatePatternLib.a

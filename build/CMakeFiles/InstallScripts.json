@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/matvey/StatePattern/build/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

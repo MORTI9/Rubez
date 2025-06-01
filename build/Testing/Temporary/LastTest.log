@@ -1,0 +1,179 @@
+Start testing: Jun 01 13:36 MSK
+----------------------------------------------------------
+1/1 Testing: AllTests
+1/1 Test: AllTests
+Command: "/home/matvey/StatePattern/build/runTests"
+Directory: /home/matvey/StatePattern/build
+"AllTests" start time: Jun 01 13:36 MSK
+Output:
+----------------------------------------------------------
+Running main() from ./googletest/src/gtest_main.cc
+[==========] Running 26 tests from 8 test suites.
+[----------] Global test environment set-up.
+[----------] 6 tests from LightTest
+[ RUN      ] LightTest.InitialStateIsOff
+[       OK ] LightTest.InitialStateIsOff (0 ms)
+[ RUN      ] LightTest.Toggle_OffToLow
+exiting  state LightOff
+entering state LowIntensity
+[       OK ] LightTest.Toggle_OffToLow (0 ms)
+[ RUN      ] LightTest.Toggle_LowToMedium
+exiting  state LightOff
+entering state LowIntensity
+exiting  state LowIntensity
+entering state MediumIntensity
+[       OK ] LightTest.Toggle_LowToMedium (0 ms)
+[ RUN      ] LightTest.Toggle_MediumToHigh
+exiting  state LightOff
+entering state LowIntensity
+exiting  state LowIntensity
+entering state MediumIntensity
+exiting  state MediumIntensity
+entering state HighIntensity
+[       OK ] LightTest.Toggle_MediumToHigh (0 ms)
+[ RUN      ] LightTest.Toggle_HighToOff
+exiting  state LightOff
+entering state LowIntensity
+exiting  state LowIntensity
+entering state MediumIntensity
+exiting  state MediumIntensity
+entering state HighIntensity
+exiting  state HighIntensity
+entering state LightOff
+[       OK ] LightTest.Toggle_HighToOff (0 ms)
+[ RUN      ] LightTest.SetStateCallsEnterAndExit
+exiting  state LightOff
+[       OK ] LightTest.SetStateCallsEnterAndExit (0 ms)
+[----------] 6 tests from LightTest (0 ms total)
+
+[----------] 2 tests from ILightStateTest
+[ RUN      ] ILightStateTest.EnterMethodCalled
+[       OK ] ILightStateTest.EnterMethodCalled (0 ms)
+[ RUN      ] ILightStateTest.ExitMethodCalled
+[       OK ] ILightStateTest.ExitMethodCalled (0 ms)
+[----------] 2 tests from ILightStateTest (0 ms total)
+
+[----------] 5 tests from ConcreteLightStatesTest
+[ RUN      ] ConcreteLightStatesTest.LightOff_Toggle_ChangesToLow
+exiting  state LightOff
+entering state LowIntensity
+[       OK ] ConcreteLightStatesTest.LightOff_Toggle_ChangesToLow (0 ms)
+[ RUN      ] ConcreteLightStatesTest.LowIntensity_Toggle_ChangesToMedium
+exiting  state LightOff
+entering state LowIntensity
+exiting  state LowIntensity
+entering state MediumIntensity
+[       OK ] ConcreteLightStatesTest.LowIntensity_Toggle_ChangesToMedium (0 ms)
+[ RUN      ] ConcreteLightStatesTest.MediumIntensity_Toggle_ChangesToHigh
+exiting  state LightOff
+entering state MediumIntensity
+exiting  state MediumIntensity
+entering state HighIntensity
+[       OK ] ConcreteLightStatesTest.MediumIntensity_Toggle_ChangesToHigh (0 ms)
+[ RUN      ] ConcreteLightStatesTest.HighIntensity_Toggle_ChangesToOff
+exiting  state LightOff
+entering state HighIntensity
+exiting  state HighIntensity
+entering state LightOff
+[       OK ] ConcreteLightStatesTest.HighIntensity_Toggle_ChangesToOff (0 ms)
+[ RUN      ] ConcreteLightStatesTest.SingletonGetInstance
+[       OK ] ConcreteLightStatesTest.SingletonGetInstance (0 ms)
+[----------] 5 tests from ConcreteLightStatesTest (0 ms total)
+
+[----------] 4 tests from DepartmentStoreTest
+[ RUN      ] DepartmentStoreTest.InitialState_Is_OutOfStock
+[       OK ] DepartmentStoreTest.InitialState_Is_OutOfStock (0 ms)
+[ RUN      ] DepartmentStoreTest.DeliveryArrived_AddsItems
+[       OK ] DepartmentStoreTest.DeliveryArrived_AddsItems (0 ms)
+[ RUN      ] DepartmentStoreTest.Purchase_ReduceItems
+[       OK ] DepartmentStoreTest.Purchase_ReduceItems (0 ms)
+[ RUN      ] DepartmentStoreTest.Discontinued_MarksAsNoLongerProduced
+[       OK ] DepartmentStoreTest.Discontinued_MarksAsNoLongerProduced (0 ms)
+[----------] 4 tests from DepartmentStoreTest (0 ms total)
+
+[----------] 2 tests from ConceptualExample01Test
+[ RUN      ] ConceptualExample01Test.InitialStateIsConcreteStateA
+Current state: State A
+Current state: State B
+[       OK ] ConceptualExample01Test.InitialStateIsConcreteStateA (0 ms)
+[ RUN      ] ConceptualExample01Test.ToggleBetweenStates
+Current state: State A
+Current state: State B
+Current state: State A
+Current state: State B
+Current state: State A
+[       OK ] ConceptualExample01Test.ToggleBetweenStates (0 ms)
+[----------] 2 tests from ConceptualExample01Test (0 ms total)
+
+[----------] 1 test from ConceptualExample02Test
+[ RUN      ] ConceptualExample02Test.SharedPtrBasedStateMachine_ToggleStates
+Current state: State A
+Current state: State B
+Current state: State A
+Current state: State B
+Current state: State A
+Current state: State B
+[       OK ] ConceptualExample02Test.SharedPtrBasedStateMachine_ToggleStates (0 ms)
+[----------] 1 test from ConceptualExample02Test (0 ms total)
+
+[----------] 1 test from ConceptualExample03Test
+[ RUN      ] ConceptualExample03Test.TransitionBetweenStates
+Context: Transition to N19ConceptualExample0314ConcreteStateAE.
+ConcreteStateA handles request1.
+ConcreteStateA wants to change the state of the context.
+Context: Transition to N19ConceptualExample0314ConcreteStateBE.
+ConcreteStateB handles request2.
+ConcreteStateB wants to change the state of the context.
+Context: Transition to N19ConceptualExample0314ConcreteStateAE.
+ConcreteStateA handles request1.
+ConcreteStateA wants to change the state of the context.
+Context: Transition to N19ConceptualExample0314ConcreteStateBE.
+ConcreteStateB handles request2.
+ConcreteStateB wants to change the state of the context.
+Context: Transition to N19ConceptualExample0314ConcreteStateAE.
+Context: Transition to N19ConceptualExample0314ConcreteStateAE.
+ConcreteStateA handles request1.
+ConcreteStateA wants to change the state of the context.
+Context: Transition to N19ConceptualExample0314ConcreteStateBE.
+ConcreteStateB handles request2.
+ConcreteStateB wants to change the state of the context.
+Context: Transition to N19ConceptualExample0314ConcreteStateAE.
+ConcreteStateA handles request1.
+ConcreteStateA wants to change the state of the context.
+Context: Transition to N19ConceptualExample0314ConcreteStateBE.
+ConcreteStateB handles request2.
+ConcreteStateB wants to change the state of the context.
+Context: Transition to N19ConceptualExample0314ConcreteStateAE.
+[       OK ] ConceptualExample03Test.TransitionBetweenStates (0 ms)
+[----------] 1 test from ConceptualExample03Test (0 ms total)
+
+[----------] 5 tests from JobApplicationTest
+[ RUN      ] JobApplicationTest.InitialStateIsReceived
+[       OK ] JobApplicationTest.InitialStateIsReceived (0 ms)
+[ RUN      ] JobApplicationTest.Received_AllowedTransitions
+[       OK ] JobApplicationTest.Received_AllowedTransitions (0 ms)
+[ RUN      ] JobApplicationTest.Interviewed_Transitions
+State Interviewed not allowed here!
+[       OK ] JobApplicationTest.Interviewed_Transitions (0 ms)
+[ RUN      ] JobApplicationTest.Invited_Transitions
+[       OK ] JobApplicationTest.Invited_Transitions (0 ms)
+[ RUN      ] JobApplicationTest.Refused_NoTransitionsAllowed
+State Invited not allowed here!
+State Interviewed not allowed here!
+State Talentpool not allowed here!
+State Received not allowed here!
+[       OK ] JobApplicationTest.Refused_NoTransitionsAllowed (0 ms)
+[----------] 5 tests from JobApplicationTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 26 tests from 8 test suites ran. (1 ms total)
+[  PASSED  ] 26 tests.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"AllTests" end time: Jun 01 13:36 MSK
+"AllTests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Jun 01 13:36 MSK
