@@ -14,7 +14,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  
+          fetch-depth: 0
 
       - name: Install dependencies
         run: |
@@ -48,12 +48,12 @@ jobs:
         run: |
           cd build
           cpack -G DEB
-          ls -la  # Для отладки
+          ls -la  # Показывает реальное имя файла
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: StatePatternApp.deb
+          name: package-deb
           path: build/*.deb
 
   release:
@@ -65,16 +65,13 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: StatePatternApp.deb
+          name: package-deb
           path: .
 
-      - name: Verify artifact exists
+      - name: Rename package
         run: |
+          mv *.deb StatePatternApp.deb
           ls -la
-          if [ ! -f "StatePatternApp.deb" ]; then
-            echo "Error: .deb file not found!"
-            exit 1
-          fi
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
@@ -86,4 +83,3 @@ jobs:
           files: StatePatternApp.deb
           draft: false
           prerelease: false
-          fail_on_unmatched_files: true
