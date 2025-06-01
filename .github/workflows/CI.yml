@@ -5,6 +5,9 @@ on:
     tags:
       - 'v*'
 
+permissions:
+  contents: write  # Явно указываем необходимые разрешения
+
 jobs:
   build-deb:
     runs-on: ubuntu-latest
@@ -48,7 +51,7 @@ jobs:
         run: |
           cd build
           cpack -G DEB
-          ls -la  # Показывает реальное имя файла
+          ls -la
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -61,6 +64,9 @@ jobs:
     runs-on: ubuntu-latest
     name: Create GitHub Release
 
+    permissions:
+      contents: write  
+
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v4
@@ -68,10 +74,16 @@ jobs:
           name: package-deb
           path: .
 
-      - name: Rename package
+      - name: Verify and rename package
         run: |
-          mv *.deb StatePatternApp.deb
-          ls -la
+          if ls *.deb 1> /dev/null 2>&1; then
+            echo "Found .deb package:"
+            ls -la *.deb
+            mv *.deb StatePatternApp.deb
+          else
+            echo "Error: No .deb package found!"
+            exit 1
+          fi
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
@@ -79,7 +91,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref_name }}
-          name: Release ${{ github.ref_name }}
+          name: "Release ${{ github.ref_name }}"
           files: StatePatternApp.deb
           draft: false
           prerelease: false
+          fail_on_unmatched_files: true
