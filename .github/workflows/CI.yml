@@ -3,7 +3,7 @@ name: Build and Release .deb package
 on:
   push:
     tags:
-      - 'v*'
+      - 'v*'  
 
 jobs:
   build-deb:
@@ -14,16 +14,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup dependencies
+      - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install -y g++ cmake libgtest-dev build-essential dpkg-dev debhelper devscripts fakeroot
+          sudo apt install -y g++ cmake libgtest-dev build-essential
 
-      - name: Create build directory
+      - name: Build GoogleTest
+        run: |
+          cd /usr/src/gtest
+          sudo cmake .
+          sudo make
+          sudo cp *.a /usr/lib/
+
+      - name: Configure and build project
         run: |
           mkdir -p build && cd build
-          cmake ..
-          cmake --build .
+          cmake .. -DBUILD_TESTS=ON
+          cmake --build . --config Release
 
       - name: Run tests
         run: |
@@ -35,8 +42,8 @@ jobs:
           cd build
           cpack -G DEB
 
-      - name: Upload .deb as artifact
-        uses: actions/upload-artifact@v3
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
         with:
           name: StatePatternApp.deb
           path: build/*.deb
@@ -44,21 +51,18 @@ jobs:
   release:
     needs: build-deb
     runs-on: ubuntu-latest
-    name: Create GitHub Release with .deb
+    name: Create GitHub Release
 
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: StatePatternApp.deb
           path: .
 
-      - name: Move .deb to root
-        run: mv *.deb StatePatternApp.deb
-
       - name: Create Release
         id: create_release
-        uses: actions/create-release@v1
+        uses: actions/create-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -68,8 +72,7 @@ jobs:
           prerelease: false
 
       - name: Upload Release Asset
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1
+        uses: actions/upload-release-asset@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
