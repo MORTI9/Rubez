@@ -3,7 +3,7 @@ name: Build and Release .deb package
 on:
   push:
     tags:
-      - 'v*'  
+      - 'v*'
 
 jobs:
   build-deb:
@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  
 
       - name: Install dependencies
         run: |
@@ -46,6 +48,7 @@ jobs:
         run: |
           cd build
           cpack -G DEB
+          ls -la  # Для отладки
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -65,15 +68,22 @@ jobs:
           name: StatePatternApp.deb
           path: .
 
+      - name: Verify artifact exists
+        run: |
+          ls -la
+          if [ ! -f "StatePatternApp.deb" ]; then
+            echo "Error: .deb file not found!"
+            exit 1
+          fi
+
       - name: Create Release
-        id: create_release
         uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
+          tag_name: ${{ github.ref_name }}
           name: Release ${{ github.ref_name }}
+          files: StatePatternApp.deb
           draft: false
           prerelease: false
-          files: |
-            StatePatternApp.deb
+          fail_on_unmatched_files: true
